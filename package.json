@@ -37,8 +37,19 @@
     "download",
     "upload"
   ],
-  "author": "",
+  "author": "DrMint",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrMint/librespeed-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DrMint/librespeed-js/issues"
+  },
+  "homepage": "https://github.com/DrMint/librespeed-js#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "tsup": "^8.4.0",
