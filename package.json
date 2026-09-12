@@ -25,7 +25,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
     "demo": "tsx test.ts",
+    "changelog": "git-cliff --unreleased --strip all",
+    "changelog:write": "git-cliff -o CHANGELOG.md",
+    "release:prep": "node scripts/release-prep.mjs",
+    "prepare": "simple-git-hooks",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -50,8 +55,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "simple-git-hooks": {
+    "pre-commit": "sh scripts/pre-commit.sh"
+  },
   "devDependencies": {
     "@types/node": "^22.13.10",
+    "git-cliff": "^2.13.1",
+    "simple-git-hooks": "^2.14.0",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",

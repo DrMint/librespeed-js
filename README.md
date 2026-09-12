@@ -101,6 +101,53 @@ Optional live smoke (hits LibreSpeed.org):
 LIBRESPEED_LIVE=1 npm test
 ```
 
+`npm install` also installs a **pre-commit** hook (`simple-git-hooks`) that runs `npm install` and `check`. Skip once with `SKIP_SIMPLE_GIT_HOOKS=1 git commit …`.
+
+## Releases
+
+Release notes are generated from Conventional Commits (`feat:`, `fix:`, `chore:`, …) with [git-cliff](https://git-cliff.org/) — see [CHANGELOG.md](./CHANGELOG.md) and GitHub Releases.
+
+Preview notes for commits since the last tag:
+
+```bash
+npm run changelog
+```
+
+Regenerate the full file:
+
+```bash
+npm run changelog:write
+```
+
+### Cut a release
+
+```bash
+npm run release:prep -- patch    # or: minor | major | 0.1.1
+```
+
+That bumps `package.json` and rewrites `CHANGELOG.md` for the new tag.
+
+Then:
+
+1. Commit the bump + changelog: `git commit -m "chore(release): vX.Y.Z"`
+2. Push and wait for CI to pass.
+3. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z`
+4. **Release** creates the GitHub Release with git-cliff notes; **Publish** publishes to npm on the same tag push (OIDC). Both are triggered by the tag push — not by the GitHub Release event (Actions started with `GITHUB_TOKEN` do not cascade).
+
+### One-time npm trusted publisher setup
+
+On npmjs.com → package **Settings → Trusted Publisher**:
+
+| Field | Value |
+|---|---|
+| Provider | GitHub Actions |
+| Organization | DrMint |
+| Repository | librespeed-js |
+| Workflow filename | `publish.yml` |
+| Allowed action | npm publish |
+
+No `NPM_TOKEN` secret is required for CI. Local emergency publishes still need `npm login` + 2FA OTP.
+
 ## License
 
 MIT. Protocol and server list format come from the LibreSpeed project ([LGPL-3.0](https://github.com/librespeed/speedtest/blob/master/LICENSE)).
