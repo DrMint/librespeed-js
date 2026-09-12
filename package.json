@@ -1,6 +1,6 @@
 {
   "name": "librespeed-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Promise-based TypeScript client for LibreSpeed backends",
   "type": "module",
   "main": "./dist/index.cjs",
